@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+//import Constants
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.MotorIDs;
 
 public class DriveTrain extends SubsystemBase {
   
@@ -22,16 +24,16 @@ public class DriveTrain extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-  LeftMotorFront = new Spark(Constants.LeftMotorFront);
+  LeftMotorFront = new Spark(MotorIDs.LeftMotorFront);
   LeftMotorFront.setInverted(false);
-  LeftMotorRear = new Spark(Constants.LeftMotorRear);
+  LeftMotorRear = new Spark(MotorIDs.LeftMotorRear);
   LeftMotorRear.setInverted(false);
   LeftMotorRear.addFollower(LeftMotorFront);
   
   
-  RightMotorFront = new Spark(Constants.RigthMotorFront);
+  RightMotorFront = new Spark(MotorIDs.RigthMotorFront);
   RightMotorFront.setInverted(false);
-  RightMotorRear = new Spark(Constants.RigthMotorRear);
+  RightMotorRear = new Spark(MotorIDs.RigthMotorRear);
   RightMotorRear.setInverted(false);
   RightMotorRear.addFollower(RightMotorFront);
 
@@ -45,7 +47,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void driveWithJoysticks(XboxController controller, double speed) {
-    drive.arcadeDrive(controller.getRawAxis(Constants.XboxLeft_Y_Axis)*speed, controller.getRawAxis(Constants.XboxLeft_X_Axis)*speed);
+    drive.arcadeDrive(controller.getRawAxis(OperatorConstants.XboxLeft_Y_Axis)*speed, controller.getRawAxis(OperatorConstants.XboxLeft_X_Axis)*speed);
   }
   public void driveForward(double speed){
     drive.tankDrive(speed, speed);
