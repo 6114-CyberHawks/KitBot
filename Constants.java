@@ -14,19 +14,23 @@ package frc.robot;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+    public static int kDriverControllerPort = 0;
+    public static final int XboxLeft_Y_Axis = 0;
+    public static final int XboxLeft_X_Axis = 5;
   }
-//Motor CANSparkMax Identities
-public static final int LeftMotorFront = 3;
-public static final int LeftMotorRear = 4;
-public static final int RigthMotorFront = 1;
-public static final int RigthMotorRear = 2;
 
-public static final int XboxLeft_Y_Axis = 0;
-public static final int XboxLeft_X_Axis = 5;
+  public static class MotorIDs {
+    //Motor Spark Identities
+    public static final int LeftMotorFront = 3;
+    public static final int LeftMotorRear = 4;
+    public static final int RigthMotorFront = 1;
+    public static final int RigthMotorRear = 2;
+  }
 
-public static final double DriveTrainSpeed = 0.6;
-public static final double DriveForwardTime = 0;
-public static final double AutoSpeed = .7;
-public static final int JoystickNumber = 0;
+  public static class RobotConstants {
+    public static final double DriveTrainSpeed = 0.6;
+    public static final double DriveForwardTime = 0;
+    public static final double AutoSpeed = .7;
+  } 
+
 }
