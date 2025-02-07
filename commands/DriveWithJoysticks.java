@@ -4,17 +4,21 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+import frc.robot.Constants.RobotConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
 public class DriveWithJoysticks extends Command {
   private final DriveTrain driveTrain;
+  private final XboxController m_driverController;
   /** Creates a new DriveWithJoysticks. */
-  public DriveWithJoysticks(DriveTrain dt) {
+  public DriveWithJoysticks(DriveTrain dt, XboxController driverJoystick) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveTrain = dt;
+    addRequirements(driveTrain);
+    m_driverController = driverJoystick;
     addRequirements(driveTrain);
   }
 
@@ -25,7 +29,7 @@ public class DriveWithJoysticks extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveTrain.driveWithJoysticks(RobotContainer.driverJoystick, Constants.DriveTrainSpeed);
+    driveTrain.driveWithJoysticks(m_driverController, RobotConstants.DriveTrainSpeed);
   }
 
   // Called once the command ends or is interrupted.
