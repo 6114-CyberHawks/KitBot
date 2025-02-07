@@ -4,16 +4,18 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autonomus;
 import frc.robot.commands.Autonomus;
 import frc.robot.commands.DriveForwardTimed;
 import frc.robot.commands.DriveWithJoysticks;
+import frc.robot.commands.RotateToTarget;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+//import constants
+import frc.robot.Constants.OperatorConstants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,28 +29,32 @@ public class RobotContainer {
   private final DriveTrain driveTrain;
   private final DriveWithJoysticks driveWithJoystick;
   private final DriveForwardTimed driveForwardTimed;
-  public static XboxController driverJoystick;
+  public static XboxController m_driverJoystick;
+  private final RotateToTarget rotateToTarget;
 
   public final Autonomus autos;
 
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
+  
+  // Driver controller
   public static XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
-
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     driveTrain = new DriveTrain();
-    driveWithJoystick = new DriveWithJoysticks(driveTrain);
+    driveWithJoystick = new DriveWithJoysticks(driveTrain, m_driverController);
     driveWithJoystick.addRequirements(driveTrain);
     driveTrain.setDefaultCommand(driveWithJoystick);
 
     driveForwardTimed = new DriveForwardTimed(driveTrain);
     driveForwardTimed.addRequirements(driveTrain);
-    
-    driverJoystick = new XboxController(Constants.JoystickNumber);
 
     autos = new Autonomus();
+
+    rotateToTarget = new RotateToTarget(driveTrain);
+    rotateToTarget.addRequirements(driveTrain);
+
+    // zeroHeading = new ZeroHeading(robotDrive);
+    // zeroHeading.addRequirements(robotDrive);
     
     // Configure the trigger bindings
     configureBindings();
@@ -67,6 +73,9 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // new Trigger(m_exampleSubsystem::exampleCondition)
     //     .onTrue(new ExampleCommand(m_exampleSubsystem));
+
+    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+        .whileTrue(new RotateToTarget(driveTrain));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
